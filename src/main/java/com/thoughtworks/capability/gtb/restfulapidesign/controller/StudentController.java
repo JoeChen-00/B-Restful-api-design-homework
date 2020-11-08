@@ -23,14 +23,14 @@ public class StudentController {
         studentService.addStudent(student);
     }
 
-    @DeleteMapping("/deleteStudent/{studentName}")
-    public void deleteStudent(@PathVariable String studentName){
-
+    @DeleteMapping("/deleteStudent/{studentId}")
+    public void deleteStudent(@PathVariable int studentId){
+        studentService.deleteStudent(studentId);
     }
 
     @GetMapping("/queryStudents")
     public List<Student> getStudents(@RequestParam(required = false, name = "gender") String gender){
-        return studentService.getStudentList();
+        return studentService.getStudentList(gender);
     }
 
     @GetMapping("/queryStudent/{studentName}")

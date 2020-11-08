@@ -4,10 +4,8 @@ import com.thoughtworks.capability.gtb.restfulapidesign.model.Sequence;
 import com.thoughtworks.capability.gtb.restfulapidesign.model.Student;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -35,8 +33,14 @@ public class StudentService {
     ));
   }
 
-  public List<Student> getStudentList() {
-    return studentList;
+  public List<Student> getStudentList(String gender) {
+    if(gender.isEmpty())
+      return studentList;
+    else{
+      List<Student> queryStudent = studentList.stream()
+              .filter(student -> student.getGender().equals(gender)).collect(Collectors.toList());
+      return queryStudent;
+    }
   }
 
   public List<Sequence> getSequenceList() {
@@ -64,5 +68,14 @@ public class StudentService {
     int length = studentList.size();
     student.setNumber(length + 1);
     studentList.add(student);
+  }
+
+  public void deleteStudent(int studentId) {
+    List<Student> queryStudent = studentList.stream()
+            .filter(student -> student.getNumber() == studentId).collect(Collectors.toList());
+    if(queryStudent.size() == 0)
+      throw new NoSuchElementException();
+    else
+      studentList.remove(queryStudent.get(0));
   }
 }
