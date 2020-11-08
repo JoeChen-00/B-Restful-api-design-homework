@@ -1,5 +1,6 @@
 package com.thoughtworks.capability.gtb.restfulapidesign.controller;
 
+import com.thoughtworks.capability.gtb.restfulapidesign.model.Sequence;
 import com.thoughtworks.capability.gtb.restfulapidesign.model.Student;
 import com.thoughtworks.capability.gtb.restfulapidesign.service.StudentService;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class StudentController {
     }
 
     @GetMapping("/sequence")
-    public List<ArrayList> getOneSequenceStudent(){
+    public List<Sequence> getOneSequenceStudent(){
         return studentService.getSequenceList();
     }
 
