@@ -33,14 +33,14 @@ public class StudentController {
         return studentService.getStudentList(gender);
     }
 
-    @GetMapping("/queryStudent/{studentName}")
-    public Student getStudent(@PathVariable String studentName){
-        return new Student();
+    @GetMapping("/queryStudent/{studentId}")
+    public Student getStudent(@PathVariable int studentId){
+        return studentService.getStudent(studentId);
     }
 
     @PatchMapping("/updateStudent")
     public void updateStudent(@RequestBody Student student){
-
+        studentService.updateStudent(student);
     }
 
     @PostMapping("/divideStudent")
@@ -50,7 +50,7 @@ public class StudentController {
 
     @PatchMapping("/updateSequenceName/{sequenceId}/{sequenceNewName}")
     public void updateSequenceName(@PathVariable int sequenceId, @PathVariable String sequenceNewName){
-
+        studentService.updateSequenceName(sequenceId,sequenceNewName);
     }
 
     @GetMapping("/sequence")

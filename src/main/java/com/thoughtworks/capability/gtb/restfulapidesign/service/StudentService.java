@@ -78,4 +78,19 @@ public class StudentService {
     else
       studentList.remove(queryStudent.get(0));
   }
+
+  public Student getStudent(int studentId) {
+    List<Student> queryStudent = studentList.stream()
+            .filter(student -> student.getNumber() == studentId).collect(Collectors.toList());
+    if(queryStudent.size() == 0)
+      throw new NoSuchElementException();
+    else
+      return queryStudent.get(0);
+  }
+
+  public void updateStudent(Student student) {
+  }
+
+  public void updateSequenceName(int sequenceId, String sequenceNewName) {
+  }
 }
