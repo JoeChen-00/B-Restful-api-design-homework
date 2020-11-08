@@ -9,31 +9,31 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class DivideStudentService {
+public class StudentService {
   static private List<Student> studentList;
   static private List<ArrayList> sequenceList = new ArrayList<>();
 
-  public DivideStudentService() {
+  public StudentService() {
   }
 
 
   public void initData(){
     studentList = new ArrayList<>(Arrays.asList(
-//      new Student(1,"成吉思汗"),
-//      new Student(2,"鲁班七号"),
-//      new Student(3,"太乙真人"),
-//      new Student(4,"钟无艳"),
-//      new Student(5,"花木兰"),
-//      new Student(6,"雅典娜"),
-//      new Student(7,"芈月"),
-//      new Student(8,"白起"),
-//      new Student(9,"刘禅"),
-//      new Student(10,"庄周"),
-//      new Student(11,"马超"),
-//      new Student(12,"刘备"),
-//      new Student(13,"哪吒"),
-//      new Student(14,"大乔"),
-//      new Student(15,"蔡文姬")
+      new Student(1,"成吉思汗","男","null"),
+      new Student(2,"鲁班七号","女","null"),
+      new Student(3,"太乙真人","男","null"),
+      new Student(4,"钟无艳","女","null"),
+      new Student(5,"花木兰","女","null"),
+      new Student(6,"雅典娜","女","null"),
+      new Student(7,"芈月","女","null"),
+      new Student(8,"白起","男","null"),
+      new Student(9,"刘禅","男","null"),
+      new Student(10,"庄周","男","null"),
+      new Student(11,"马超","男","null"),
+      new Student(12,"刘备","男","null"),
+      new Student(13,"哪吒","男","null"),
+      new Student(14,"大乔","女","null"),
+      new Student(15,"蔡文姬","女","null")
     ));
   }
 
@@ -61,9 +61,9 @@ public class DivideStudentService {
     }
   }
 
-  public void addStudent(String StudentName){
+  public void addStudent(Student student){
     int length = studentList.size();
-    Student newStudent = new Student(length + 1,StudentName);
-    studentList.add(newStudent);
+    student.setNumber(length + 1);
+    studentList.add(student);
   }
 }
