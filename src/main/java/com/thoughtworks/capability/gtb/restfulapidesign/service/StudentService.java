@@ -4,6 +4,7 @@ import com.thoughtworks.capability.gtb.restfulapidesign.model.Sequence;
 import com.thoughtworks.capability.gtb.restfulapidesign.model.Student;
 import org.springframework.stereotype.Service;
 
+import java.rmi.NoSuchObjectException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ public class StudentService {
   static private List<Student> studentList;
   static private List<Sequence> sequenceList;
 
-  public void initData(){
+  static {
     sequenceList = new ArrayList<>();
     studentList = new ArrayList<>(Arrays.asList(
       new Student(1,"成吉思汗","男","null"),
@@ -54,7 +55,7 @@ public class StudentService {
     Collections.shuffle(studentListClone);
     sequenceList.clear();
     for(int iter_i = 0;iter_i < 6; ++iter_i){
-      Sequence sequence = new Sequence();
+      Sequence sequence = new Sequence(iter_i + 1, "","", new ArrayList<>());
       for(int iter_j = iter_i * 2 + Math.min(iter_i,length%6);
           iter_j < (iter_i + 1) * 2 + Math.min(iter_i + 1,length%6); ++iter_j){
         sequence.getStudentList().add(studentListClone.get(iter_j));
@@ -70,27 +71,40 @@ public class StudentService {
     studentList.add(student);
   }
 
-  public void deleteStudent(int studentId) {
+  public void deleteStudent(int studentId) throws NoSuchObjectException {
     List<Student> queryStudent = studentList.stream()
             .filter(student -> student.getNumber() == studentId).collect(Collectors.toList());
     if(queryStudent.size() == 0)
-      throw new NoSuchElementException();
+      throw new NoSuchObjectException("student");
     else
       studentList.remove(queryStudent.get(0));
   }
 
-  public Student getStudent(int studentId) {
+  public Student getStudent(int studentId) throws NoSuchObjectException {
     List<Student> queryStudent = studentList.stream()
             .filter(student -> student.getNumber() == studentId).collect(Collectors.toList());
     if(queryStudent.size() == 0)
-      throw new NoSuchElementException();
+      throw new NoSuchObjectException("student");
     else
       return queryStudent.get(0);
   }
 
-  public void updateStudent(Student student) {
+  public void updateStudent(Student newStudent) throws NoSuchObjectException {
+    List<Student> queryStudent = studentList.stream()
+            .filter(student -> student.getNumber() == newStudent.getNumber()).collect(Collectors.toList());
+    if(queryStudent.size() == 0)
+      throw new NoSuchObjectException("student");
+    else{
+      queryStudent.get(0).setName(newStudent.getName());
+      queryStudent.get(0).setGender(newStudent.getGender());
+      queryStudent.get(0).setNote(newStudent.getNote());
+    }
   }
 
-  public void updateSequenceName(int sequenceId, String sequenceNewName) {
+  public void updateSequenceName(int sequenceId, String sequenceNewName) throws NoSuchObjectException {
+    if(sequenceId >= 1 && sequenceId <= 6){
+      sequenceList.get(sequenceId - 1).setSequenceName(sequenceNewName);
+    }else
+      throw new NoSuchObjectException("sequence");
   }
 }
